@@ -123,18 +123,17 @@ class App(CTk):
         self.reload()
 
         def btn_command():
-            user_info = [
-                self.current_elements[0+1].get(),
-                self.current_elements[1+1].get(),
-                self.current_elements[2+1].get(),
-                self.current_elements[3+1].get(),
-                self.current_elements[4+1].get(),
-                self.current_elements[5+1].get()
-            ]
-            for i in user_info:
+            self.user_info = {
+                "name": self.current_elements[1].get(),
+                "username": self.current_elements[2].get(),
+                "id": self.current_elements[3].get(),
+                "email": self.current_elements[4].get(),
+                "phone": self.current_elements[5].get(),
+            }
+            for i in self.user_info.values():
                 if not i:
                     return
-            log(message="Execute", end="\n")
+            log(message=f"Execute\n{self.user_info}", end="\n")
 
         try:
             self.current_elements.append(
@@ -194,15 +193,6 @@ class App(CTk):
             )
 
             self.current_elements.append(
-                CTkEntry(
-                    master=self.main,
-                    placeholder_text="ID Reference",
-                    width=350,
-                    height=40
-                )
-            )
-
-            self.current_elements.append(
                 CTkButton(
                     master=self.main,
                     font=CTkFont(family="Arial", size=15),
@@ -213,7 +203,7 @@ class App(CTk):
             )
             self.current_elements[0].pack()
 
-            for i in range(1, 8):
+            for i in range(len(self.current_elements)):
                 self.current_elements[i].pack(expand="True")
 
         except Exception as e:

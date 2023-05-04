@@ -8,6 +8,9 @@ class App(CTk):
     def __init__(self) -> None:
         super().__init__()
         try:
+            self.service_options = ["Create cards", "Create new user"]
+            self.function = [self.create_card, self.create_user]
+
             set_appearance_mode("dark")
             self.title('')
             self.geometry('800x500')
@@ -51,9 +54,6 @@ class App(CTk):
             )
             self.tittle.pack(side="top")
 
-            self.service_options = ["Create cards", "Create new user"]
-            self.function = [self.create_card, self.create_user]
-
             self.menu_btn = list()
             for element in range(len(self.service_options)):
                 self.menu_btn.append(CTkButton(
@@ -73,9 +73,10 @@ class App(CTk):
 
     def create_card(self):
         self.reload()
+        self.systems = ["WVT", "BPMS", "CIS", "PSW"]
 
         def btn_command():
-            if self.current_elements[1].get() in str(["WVT", "BPMS", "CIS", "PSW"]):
+            if self.current_elements[1].get() in self.systems:
                 log(message='Execute', end="\n")
         try:
             self.current_elements.append(
@@ -93,7 +94,7 @@ class App(CTk):
                 CTkComboBox(
                     master=self.main,
                     font=CTkFont(family="Arial Rounded MT", size=15),
-                    values=["WVT", "BPMS", "CIS", "PSW"],
+                    values=self.systems,
                     width=350,
                     height=40,
                     bg_color="#4c4f56",
@@ -123,15 +124,17 @@ class App(CTk):
 
         def btn_command():
             user_info = [
-                self.current_elements[0+1].get(),  # Nome
-                self.current_elements[1+1].get(),  # Login
-                self.current_elements[2+1].get(),  # CPF
-                self.current_elements[3+1].get(),  # E-mail
-                self.current_elements[4+1].get(),  # Celular
-                self.current_elements[5+1].get()  # CPF do usuário espelho
+                self.current_elements[0+1].get(),
+                self.current_elements[1+1].get(),
+                self.current_elements[2+1].get(),
+                self.current_elements[3+1].get(),
+                self.current_elements[4+1].get(),
+                self.current_elements[5+1].get()
             ]
-            if user_info[0] != '':
-                log(message='Execute', end="\n")
+            for i in user_info:
+                if not i:
+                    return
+            log(message="Execute", end="\n")
 
         try:
             self.current_elements.append(
@@ -209,13 +212,9 @@ class App(CTk):
                 )
             )
             self.current_elements[0].pack()
-            self.current_elements[1].pack(expand="True")
-            self.current_elements[2].pack(expand="True")
-            self.current_elements[3].pack(expand="True")
-            self.current_elements[4].pack(expand="True")
-            self.current_elements[5].pack(expand="True")
-            self.current_elements[6].pack(expand="True")
-            self.current_elements[7].pack(expand="True")
+
+            for i in range(1, 8):
+                self.current_elements[i].pack(expand="True")
 
         except Exception as e:
             log(error=e, message="Erro na criação dos elementos do create_user")

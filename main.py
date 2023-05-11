@@ -8,8 +8,8 @@ class App(CTk):
     def __init__(self) -> None:
         super().__init__()
         try:
-            self.service_options = ["Create cards", "Create new user"]
-            self.function = [self.create_card, self.create_user]
+            self.service_options = ["Create cards", "Create new user", "Teste"]
+            self.function = [self.create_card, self.create_user, self.teste]
 
             set_appearance_mode("dark")
             self.title('')
@@ -30,6 +30,7 @@ class App(CTk):
                 master=self,
                 fg_color="#2E4053",
                 corner_radius=0,
+                height=50,
             )
             self.header.pack(side="top", fill="x")
 
@@ -208,6 +209,31 @@ class App(CTk):
 
         except Exception as e:
             log(error=e, message="Erro na criação dos elementos do create_user")
+
+    def teste(self) -> None:
+        self.reload()
+        try:
+            self.current_elements.append(
+                CTkLabel(
+                    master=self.header,
+                    font=CTkFont(family="Arial", size=25),
+                    text="Teste",
+                    height=50,
+                    width=50,
+                    bg_color="#2E4053",
+                )
+            )
+
+            self.current_elements.append(
+                CTkRadioButton(
+                    master=self.main
+                )
+            )
+
+            for i in range(len(self.current_elements)):
+                self.current_elements[i].pack()
+        except Exception as e:
+            log(error=e, message="Erro na hora de recarregar elementos do teste")
 
     def reload(self) -> None:
         try:

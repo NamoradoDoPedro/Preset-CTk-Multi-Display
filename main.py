@@ -53,7 +53,7 @@ class App(CTk):
             self.tittle.pack(side="top")
 
             for index, (string, function) in enumerate({
-                "Create cards": self.create_card,
+                "Open Website": self.open_web,
                 "Create new user": self.create_user
             }.items()):
                 CTkButton(
@@ -69,9 +69,9 @@ class App(CTk):
         except Exception as e:
             log(error=e, message="Erro na hora de inciar os elementos básicos do App")
 
-    def create_card(self):
+    def open_web(self):
         self.reload()
-        self.systems = ["WVT", "BPMS", "CIS", "PSW"]
+        self.systems = ["Google", "Facebook", "YouTube", "Instagram",]
 
         def btn_command():
             if self.current_elements[1].get() in self.systems:
@@ -81,7 +81,7 @@ class App(CTk):
                 CTkLabel(
                     master=self.header,
                     font=CTkFont(family="Arial", size=25),
-                    text="Create Cards",
+                    text="Open Website",
                     height=50,
                     width=50,
                     bg_color="#2E4053",
@@ -111,7 +111,7 @@ class App(CTk):
 
             self.current_elements[0].pack()
             self.current_elements[1].pack(side="left", expand="True")
-            self.current_elements[1].set("Choose a system")
+            self.current_elements[1].set("Choose a website")
             self.current_elements[2].pack(side="right", expand="True")
 
         except Exception as e:
@@ -172,14 +172,13 @@ class App(CTk):
             log(error=e, message="Erro na criação dos elementos do create_user")
 
     def reload(self) -> None:
+        system('cls')
         try:
-            system('cls')
-            for i in range(len(self.current_elements)):
-                self.current_elements[i].destroy()
-            self.current_elements.clear()
-
+            list(i.destroy() for i in self.current_elements)
         except Exception as e:
-            log(error=e, message="Erro na hora de recarregar elementos")
+            log(error=e, message="Erro na hora de recarregar elementos ou elementos carregados de forma errada")
+        finally:
+            self.current_elements.clear()
 
 
 if __name__ == '__main__':

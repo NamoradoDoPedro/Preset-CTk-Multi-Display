@@ -9,9 +9,10 @@ def log(error: Optional[str] = None,
     """
     Logs an error, printing it with additional information if provided.
     Parameters:
-        error (str): The error message to log.
+        error (str, optional): The error message to log.
         message (str, optional): The message with user can use to send messages in console when the sys crash (default is None).
-        driver (str, optional): The driver associated with the error (default is None).
+        driver (str, optional): The driver associated with the driver of selenium (default is None).
+        end (str, optional): The 'end' of the print func.
     Returns:
         None
     """
@@ -31,4 +32,7 @@ def log(error: Optional[str] = None,
         print("\n".join(filter(None, [filename, message, line, error])))
 
         if driver is not None:
-            driver.quit()
+            try:
+                driver.quit()
+            except:
+                pass

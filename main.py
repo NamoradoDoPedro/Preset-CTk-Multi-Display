@@ -8,9 +8,6 @@ class App(CTk):
     def __init__(self) -> None:
         super().__init__()
         try:
-            self.service_options = ["Create cards", "Create new user", "Teste"]
-            self.function = [self.create_card, self.create_user, self.teste]
-
             set_appearance_mode("dark")
             self.title('')
             self.geometry('800x500')
@@ -55,19 +52,19 @@ class App(CTk):
             )
             self.tittle.pack(side="top")
 
-            self.menu_btn = list()
-            for element in range(len(self.service_options)):
-                self.menu_btn.append(CTkButton(
+            for index, (string, function) in enumerate({
+                "Create cards": self.create_card,
+                "Create new user": self.create_user
+            }.items()):
+                CTkButton(
                     master=self.aside,
-                    text=self.service_options[element],
+                    text=string,
                     fg_color="#292929",
                     width=200,
                     height=50,
                     corner_radius=0,
-                    command=self.function[
-                        element - (len(self.service_options) - len(self.function))],
-                ))
-                self.menu_btn[element].pack(side="top")
+                    command=function
+                ).pack(side="top")
 
         except Exception as e:
             log(error=e, message="Erro na hora de inciar os elementos básicos do App")
@@ -148,50 +145,15 @@ class App(CTk):
                 )
             )
 
-            self.current_elements.append(
-                CTkEntry(
-                    master=self.main,
-                    placeholder_text="Name",
-                    width=350,
-                    height=40
+            for i in ["Name", "Username", "ID", "E-mail", "Phone"]:
+                self.current_elements.append(
+                    CTkEntry(
+                        master=self.main,
+                        placeholder_text=i,
+                        width=350,
+                        height=40
+                    )
                 )
-            )
-
-            self.current_elements.append(
-                CTkEntry(
-                    master=self.main,
-                    placeholder_text="Username",
-                    width=350,
-                    height=40
-                )
-            )
-
-            self.current_elements.append(
-                CTkEntry(
-                    master=self.main,
-                    placeholder_text="ID",
-                    width=350,
-                    height=40
-                )
-            )
-
-            self.current_elements.append(
-                CTkEntry(
-                    master=self.main,
-                    placeholder_text="E-mail",
-                    width=350,
-                    height=40
-                )
-            )
-
-            self.current_elements.append(
-                CTkEntry(
-                    master=self.main,
-                    placeholder_text="Phone",
-                    width=350,
-                    height=40,
-                )
-            )
 
             self.current_elements.append(
                 CTkButton(
@@ -204,36 +166,10 @@ class App(CTk):
             )
             self.current_elements[0].pack()
 
-            for i in range(len(self.current_elements)):
-                self.current_elements[i].pack(expand="True")
+            list(i.pack(expand="True") for i in self.current_elements)
 
         except Exception as e:
             log(error=e, message="Erro na criação dos elementos do create_user")
-
-    def teste(self) -> None:
-        self.reload()
-        try:
-            self.current_elements.append(
-                CTkLabel(
-                    master=self.header,
-                    font=CTkFont(family="Arial", size=25),
-                    text="Teste",
-                    height=50,
-                    width=50,
-                    bg_color="#2E4053",
-                )
-            )
-
-            self.current_elements.append(
-                CTkRadioButton(
-                    master=self.main
-                )
-            )
-
-            for i in range(len(self.current_elements)):
-                self.current_elements[i].pack()
-        except Exception as e:
-            log(error=e, message="Erro na hora de recarregar elementos do teste")
 
     def reload(self) -> None:
         try:
